@@ -1,0 +1,4 @@
+scenario,average_rtt_ms,packet_loss_percent,http_total_time_ms,tcp_throughput_gbps,udp_throughput_mbps,udp_jitter_ms,udp_loss_percent
+Baseline,0.285,0,0.527,113,10,0.003,0
+Delay_50ms,53.135,0,103.298,,,,
+Packet_Loss_5percent,0.294,5,0.485,,,,
