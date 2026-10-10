@@ -1,15 +1,21 @@
 import csv
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 with open("results.csv", newline="") as f:
     rows = list(csv.DictReader(f))
 
-scenarios = [r["scenario"] for r in rows]
-rtt = [float(r["average_rtt_ms"]) for r in rows]
-loss = [float(r["packet_loss_percent"]) for r in rows]
-http = [float(r["http_total_time_ms"]) for r in rows]
+def make_plot(column, ylabel, title, filename):
+    valid_rows = [
+        r for r in rows
+        if r.get(column, "").strip()
+        and r.get("scenario", "").strip()
+    ]
 
-def make_plot(values, ylabel, title, filename):
+    scenarios = [r["scenario"] for r in valid_rows]
+    values = [float(r[column]) for r in valid_rows]
+
     plt.figure(figsize=(8, 5))
     plt.bar(scenarios, values)
     plt.ylabel(ylabel)
@@ -20,6 +26,9 @@ def make_plot(values, ylabel, title, filename):
     plt.close()
     print(f"Saved {filename}")
 
-make_plot(rtt, "Average RTT (ms)", "Network RTT Comparison", "rtt_comparison.png")
-make_plot(loss, "Packet loss (%)", "Packet Loss Comparison", "packet_loss_comparison.png")
-make_plot(http, "HTTP total time (ms)", "HTTP Response Time Comparison", "http_time_comparison.png")
+make_plot("average_rtt_ms", "Average RTT (ms)",
+          "Network RTT Comparison", "rtt_comparison.png")
+make_plot("packet_loss_percent", "Packet loss (%)",
+          "Packet Loss Comparison", "packet_loss_comparison.png")
+make_plot("http_total_time_ms", "HTTP total time (ms)",
+          "HTTP Response Time Comparison", "http_time_comparison.png")
