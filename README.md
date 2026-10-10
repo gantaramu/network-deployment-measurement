@@ -41,6 +41,27 @@ and connection closure.
 | Baseline | 0.285 ms | 0% | 0.527 ms |
 | 50 ms delay | 53.135 ms | 0% | 103.298 ms |
 | 5% packet loss | 0.294 ms | 5% | 0.485 ms |
+### Performance Graphs
+
+The following graphs compare the network performance under baseline, delay, and packet-loss conditions.
+
+**Average Round-Trip Time (RTT)**
+
+![RTT comparison](rtt_comparison.png)
+
+**Packet Loss Comparison**
+
+![Packet loss comparison](packet_loss_comparison.png)
+
+**HTTP Response Time Comparison**
+
+![HTTP response time comparison](http_time_comparison.png)
+
+### Analysis of Results
+
+- **Baseline:** The average RTT was 0.285 ms, with no packet loss. The HTTP request completed in 0.527 ms.
+- **50 ms delay:** The average RTT increased to 53.135 ms. HTTP total time increased to 103.298 ms because the added network delay affected communication between the UE and the application server.
+- **5% packet loss:** The 100-packet ICMP test recorded 5% packet loss. The tested HTTP request still returned status 200 OK, with a measured total time of 0.485 ms. This single HTTP measurement does not establish how packet loss affects HTTP performance over repeated tests.
 
 TCP throughput measured between UE and App was 113 Gbit/s in the virtual
 environment, with zero reported TCP retransmissions.
